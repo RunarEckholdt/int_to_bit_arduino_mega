@@ -1,21 +1,20 @@
 
-//NB! Husk å skru av linjeskift i den serielle overvåkeren
-//Når du starter programmet velg først hvor mange totale pins du bruker og velg derretter hvor mange tall du skal bruke
+//NB! Remember to torn off linebreak in the serial monitor
+//When you start the program chose first how many pins you use and then hvor many numbers you are going to use (integers)
 
-byte numPins = 3; //endre mengden output som brukes
-byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //angi hvilke pinns som brukes, går fra MSD til LSD
+byte numPins = 3;
+byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSD to LSD
 byte sepNums;
-const byte buttonPin = 5; //pin for knapp (valgfritt) Dersom du velger å bruke den uncomment while loopen lenger nede i koden
+const byte buttonPin = 5; //pin for button (optional) there is a while loop at the bottom of the code that must be uncommented for this to be used
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println();
   setBits();
   antNums();
   
   
-  for (int i = 0; i < numPins; i++) { //setter alle pinnsa til OUTPUT
+  for (int i = 0; i < numPins; i++) { //sets all pins to output and low
     pinMode(bitPins[i], OUTPUT);
     digitalWrite(bitPins[i],LOW);
   }
@@ -97,14 +96,14 @@ void allValues(){
       byte x = numPins/sepNums;
       for(int i = 0; i < numPins/sepNums; i++) {
         x--;
-          bool pinState = bitRead(numbers[n], x); //leser av bit fra MSD til LSD
+          bool pinState = bitRead(numbers[n], x); //read bits from MSD to LSD
             digitalWrite(bitPins[m], pinState); 
         Serial.print(pinState);
         m++;
     }
     Serial.println();
     }
-    //uncomment while løkka for å bruke knapp ved flere verdier i Serial
+    //uncomment the while loop to use the button for sevral values in the Serial monitor
     //while(digitalRead(buttonPin)==LOW&&Serial.available()); 
     delay(500);// ved bruk av knapp kommenter ut delay for mer flyt
     
