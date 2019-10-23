@@ -1,6 +1,6 @@
 
-//NB! Remember to torn off linebreak in the serial monitor
-//When you start the program chose first how many pins you use and then hvor many numbers you are going to use (integers)
+//NB! Remember to turn off linebreak in the serial monitor
+//When you start the program choose first how many pins you use and then how many numbers you are going to use (integers)
 
 byte numPins = 3;
 byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSD to LSD
@@ -89,7 +89,7 @@ void allValues(){
      
     }
   
-  byte m = 0; //brukt for å telle pins 
+  byte m = 0; //used to count pins 
     for(byte n = 0;n<sepNums;n++){
       Serial.print(numbers[n]);
       Serial.print(" = ");
@@ -105,7 +105,7 @@ void allValues(){
     }
     //uncomment the while loop to use the button for sevral values in the Serial monitor
     //while(digitalRead(buttonPin)==LOW&&Serial.available()); 
-    delay(500);// ved bruk av knapp kommenter ut delay for mer flyt
+    delay(500); 
     
 
   
