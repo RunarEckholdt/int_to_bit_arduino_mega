@@ -1,8 +1,13 @@
+//Runar Eckholdt
+
+
+
+
 
 //NB! Remember to turn off linebreak in the serial monitor
 //When you start the program choose first how many pins you use and then how many numbers you are going to use (integers)
 
-byte numPins = 3;
+byte numPins;
 byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSD to LSD
 byte sepNums;
 const byte buttonPin = 5; //pin for button (optional) there is a while loop at the bottom of the code that must be uncommented for this to be used
@@ -18,7 +23,7 @@ void setup() {
     pinMode(bitPins[i], OUTPUT);
     digitalWrite(bitPins[i],LOW);
   }
-  pinMode(buttonPin, INPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
   
 }
 
@@ -93,10 +98,8 @@ void allValues(){
     for(byte n = 0;n<sepNums;n++){
       Serial.print(numbers[n]);
       Serial.print(" = ");
-      byte x = numPins/sepNums;
-      for(int i = 0; i < numPins/sepNums; i++) {
-        x--;
-          bool pinState = bitRead(numbers[n], x); //read bits from MSD to LSD
+      for(int i = numPins/sepNums; i != 0; i--) {
+          bool pinState = bitRead(numbers[n], i-1); //read bits from MSD to LSD
             digitalWrite(bitPins[m], pinState); 
         Serial.print(pinState);
         m++;
