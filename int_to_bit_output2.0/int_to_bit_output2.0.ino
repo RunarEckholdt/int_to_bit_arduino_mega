@@ -8,7 +8,7 @@
 //When you start the program choose first how many pins you use and then how many numbers you are going to use (integers)
 
 byte numPins;
-byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSD to LSD
+byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSB to LSB
 byte sepNums;
 const byte buttonPin = 5; //pin for button (optional) there is a while loop at the bottom of the code that must be uncommented for this to be used
 
@@ -36,7 +36,7 @@ void setBits(){
   Serial.print("How many total bits/pins? Max 8, Min 1: ");
   while(!Serial.available());
   byte input = Serial.parseInt();
-  if(input!=0&&input<9){
+  if(input!=0&&input<9){//input must be between 1 and 8
     Serial.println(input);
     numPins=input;
     }else{
@@ -73,10 +73,10 @@ byte getNumber(byte i){
   Serial.print("Insert number ");
   Serial.print(i);
   Serial.print(": ");
-  while (!Serial.available());
+  while (!Serial.available());//waiting for user input
   num = Serial.parseInt();
   
-  if (num < pow(2,numPins/sepNums)){
+  if (num < pow(2,numPins/sepNums)){ //checks if number can fit in the given bitsize
     Serial.println(num);
     return num;
     }else{
@@ -99,8 +99,8 @@ void allValues(){
       Serial.print(numbers[n]);
       Serial.print(" = ");
       for(int i = numPins/sepNums; i != 0; i--) {
-          bool pinState = bitRead(numbers[n], i-1); //read bits from MSD to LSD
-            digitalWrite(bitPins[m], pinState); 
+          bool pinState = bitRead(numbers[n], i-1); //read bits from MSB to LSB
+            digitalWrite(bitPins[m], pinState); //write high or low to pins in the bitPins array 
         Serial.print(pinState);
         m++;
     }
