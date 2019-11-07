@@ -7,16 +7,19 @@
 //NB! Remember to turn off linebreak in the serial monitor
 //When you start the program choose first how many pins you use and then how many numbers you are going to use (integers)
 
+byte maxBits = 8;
 byte numPins;
-byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSB to LSB
+byte bitPins[] = {13, 12, 11, 10,9,8,7,6}; //define what pins to use, from MSB to LSB. If you add more pins remember to change the maxBits variable
 byte sepNums;
 const byte buttonPin = 5; //pin for button (optional) there is a while loop at the bottom of the code that must be uncommented for this to be used
 
 void setup() {
   Serial.begin(9600);
   Serial.println();
-  setBits();
+  
   antNums();
+  setBits();
+  
   
   
   for (int i = 0; i < numPins; i++) { //sets all pins to output and low
@@ -32,39 +35,39 @@ void loop() {
 }
 
 
-void setBits(){
-  Serial.print("How many total bits/pins? Max 8, Min 1: ");
+
+
+void antNums(){
+  Serial.print("How many numbers? 1-8: ");
   while(!Serial.available());
   byte input = Serial.parseInt();
-  if(input!=0&&input<9){//input must be between 1 and 8
+  if(input!=0 && input <9){
     Serial.println(input);
-    numPins=input;
+    sepNums=input;
     }else{
       Serial.println();
-      Serial.println("0 bits is not allowed");
+      Serial.println("The amount of numbers cannot be 0 or larger than 8");
+      antNums();
+      }
+  }
+
+
+void setBits(){
+  Serial.print("How many bits per number? Min in is 1, max in this case is ");
+  Serial.println(int(maxBits/sepNums));
+  while(!Serial.available());
+  byte input = Serial.parseInt();
+  if(input!=0&&input*sepNums<9){
+    Serial.println(input);
+    numPins=input*sepNums;
+    }else{
+      Serial.println();
+      Serial.print("0 bits is not allowed and cannot be larger than ");
+      Serial.println(int(maxBits/sepNums));
       setBits();
       }
   }
 
-void antNums(){
-  Serial.print("How many seperate numbers?: ");
-  while(!Serial.available());
-  byte input = Serial.parseInt();
-  if(numPins%input==0){
-    Serial.println(input);
-    sepNums=input;
-    }else{
-      Serial.println("Not valid");
-      Serial.println("Answer of (number of bits) mod (input) must be 0");
-      Serial.print("In this case ");
-      Serial.print(numPins);
-      Serial.print(" mod ");
-      Serial.print(input);
-      Serial.print(" = ");
-      Serial.println(numPins%input);
-      antNums();
-      }
-  }
 
 
 byte getNumber(byte i){
