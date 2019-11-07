@@ -94,7 +94,6 @@ void allValues(){
   for (int i =0;i<sepNums;i++){
      //for the amount of chosen separate numbers getting numbers and adds it to the array Numbers
      numbers[i] = getNumber(i+1);
-     
     }
   
   byte m = 0; //used to count pins 
